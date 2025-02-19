@@ -1,0 +1,1 @@
+"""Guntamagic Custom Component"""
