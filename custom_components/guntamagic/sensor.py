@@ -1,6 +1,8 @@
 import logging
 import aiohttp
 import voluptuous as vol
+import json
+import os
 
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.helpers.entity import Entity
@@ -14,38 +16,49 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass, entry, async_add_entities):
 
-    _LOGGER.debug("async_setup_entry für Guntamagic wurde aufgerufen.")
-    
-    """Set up the Guntamagic sensors from a config entry."""
+    MAPPING_FILE = os.path.join(os.path.dirname(__file__), "mapping.json")
+
+def load_mapping():
+    try:
+        with open(MAPPING_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        _LOGGER.error("Fehler beim Laden des Mappings: %s", e)
+        return {}
+
+async def async_setup_entry(hass, entry, async_add_entities):
     ip_address = entry.data[CONF_IP_ADDRESS]
     key = entry.data[CONF_KEY]
-    name = entry.title  # Name der Integration als Basisname nehmen
+    name = entry.data.get(CONF_NAME, DEFAULT_NAME)
     url = f"http://{ip_address}/ext/daqdata.cgi?key={key}"
 
-    _LOGGER.debug("Guntamagic async_setup_entry aufgerufen für IP: %s", ip_address)
-
     try:
-        response = aiohttp.get(url, timeout=10)
+        response = requests.get(url, timeout=10)
         response.raise_for_status()
         data = response.json()
-        _LOGGER.debug("Guntamagic API Antwort: %s", data)
     except requests.RequestException as error:
-        _LOGGER.error("Fehler beim Abrufen der Daten: %s", error)
+        _LOGGER.error("Error fetching data: %s", error)
         return
 
-    if not data:
-        _LOGGER.warning("Guntamagic API hat keine Daten geliefert!")
+    if not isinstance(data, list):
+        _LOGGER.error("Erwartete Liste, aber API gab: %s", type(data))
+        return
 
-    # Sensoren aus den JSON-Daten erstellen
-    sensors = [GuntamagicSensor(name, url, param, value) for param, value in data.items()]
-    _LOGGER.debug("Erstelle %d Sensoren: %s", len(sensors), [sensor.name for sensor in sensors])
+    mapping = load_mapping()
+    sensors = [
+        GuntamagicSensor(name, url, mapping.get(str(i), f"Unbekannt_{i}"), value)
+        for i, value in enumerate(data)
+    ]
+
+    _LOGGER.debug("Erstellte Sensoren: %s", [s.name for s in sensors])
     async_add_entities(sensors, True)
+
 
     _LOGGER.debug("Guntamagic Sensoren hinzugefügt: %s", [sensor.name for sensor in sensors])
 
 
 class GuntamagicSensor(SensorEntity):
-    """Ein Sensor für jeden Wert aus dem JSON."""
+    "Ein Sensor für jeden Wert aus dem JSON."
 
     def __init__(self, name, url, param, value):
         self._attr_name = f"{name} {param}"
@@ -56,17 +69,17 @@ class GuntamagicSensor(SensorEntity):
 
     @property
     def name(self):
-        """Name des Sensors."""
+        "Name des Sensors."
         return self._attr_name
 
     @property
     def state(self):
-        """Aktueller Zustand des Sensors."""
+        "Aktueller Zustand des Sensors."
         return self._state
 
     async def async_update(self):
-    """Daten vom Gerät abrufen und den Zustand aktualisieren."""
-    _LOGGER.debug("GuntamagicSensor async_update aufgerufen für %s", self._attr_name)
+        "Daten vom Gerät abrufen und den Zustand aktualisieren."
+        _LOGGER.debug("GuntamagicSensor async_update aufgerufen für %s", self._attr_name)
 
         async with aiohttp.ClientSession() as session:
             try:
