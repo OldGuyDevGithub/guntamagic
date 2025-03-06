@@ -29,7 +29,7 @@ def load_mapping():
 async def async_setup_entry(hass, entry, async_add_entities):
     ip_address = entry.data[CONF_IP_ADDRESS]
     key = entry.data[CONF_KEY]
-    name = entry.data.get(CONF_NAME, DEFAULT_NAME)
+    name = entry.data.get(CONF_NAME, "Guntamagic")
     url = f"http://{ip_address}/ext/daqdata.cgi?key={key}"
 
     try:
