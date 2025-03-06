@@ -51,6 +51,7 @@ class GuntamagicSensor(SensorEntity):
         self._name = details["name"]
         self._unit = details.get("unit", None)
         self._attr_native_unit_of_measurement = self._unit
+        self._attr_native_value = "Testwert"
 
     @property
     def name(self):
@@ -69,4 +70,6 @@ class GuntamagicSensor(SensorEntity):
         return False
 
     async def async_update(self):
-        await self.coordinator.async_request_refresh()
+        #await self.coordinator.async_request_refresh()
+        self._attr_native_value = self.coordinator.data.get(self._sensor_key, "Kein Wert")
+        self.async_write_ha_state()
