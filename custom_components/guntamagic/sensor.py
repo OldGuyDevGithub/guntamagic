@@ -32,10 +32,11 @@ async def async_setup_entry(hass, entry, async_add_entities):
     _LOGGER.debug("async_setup_entry aufgerufen")
 
     coordinator = hass.data[DOMAIN][entry.entry_id]
-
+    _LOGGER.debug("async_setup_entry aufgerufen 2")
     sensors = []
     _LOGGER.debug(f"{len(sensors)} im array")
     _LOGGER.debug(sensors)
+    _LOGGER.debug("async_setup_entry aufgerufen 3")
     for sensor_key, sensor_info in SENSOR_MAPPING.items():
         _LOGGER.debug(f"Erstelle Sensor: {sensor_key} mit Name: {sensor_info['name']}")  
         sensors.append(
@@ -46,7 +47,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
                 sensor_info.get("unit"),
             )
         )
-
+    _LOGGER.debug("async_setup_entry aufgerufen 4")
     if not sensors:
         _LOGGER.error("Es wurden keine Sensoren erstellt!")
 
