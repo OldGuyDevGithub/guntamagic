@@ -13,7 +13,7 @@ SCAN_INTERVAL = timedelta(seconds=30)
 MAPPING_FILE = "custom_components/guntamagic/modbus_mapping.json"
 API_URL = f"http://{ip_address}/ext/daqdata.cgi?key={key}"
 
-async def async_setup_entry(hass, entry, async_add_entities):
+"""async def async_setup_entry(hass, entry, async_add_entities):
     try:
         with open(hass.config.path(MAPPING_FILE), "r", encoding="utf-8") as file:
             mapping = json.load(file)
@@ -25,7 +25,32 @@ async def async_setup_entry(hass, entry, async_add_entities):
     await coordinator.async_config_entry_first_refresh()
     
     sensors = [GuntamagicSensor(coordinator, sensor_id, details) for sensor_id, details in mapping.items()]
+    async_add_entities(sensors, update_before_add=True)"""
+
+async def async_setup_entry(hass, entry, async_add_entities):
+    """Set up Guntamagic sensors from a config entry."""
+    _LOGGER.debug("async_setup_entry aufgerufen")
+
+    coordinator = hass.data[DOMAIN][entry.entry_id]
+
+    sensors = []
+    for sensor_key, sensor_info in SENSOR_MAPPING.items():
+        _LOGGER.debug(f"Erstelle Sensor: {sensor_key} mit Name: {sensor_info['name']}")  
+        sensors.append(
+            GuntamagicSensor(
+                coordinator,
+                sensor_info["name"],
+                sensor_key,
+                sensor_info.get("unit"),
+            )
+        )
+
+    if not sensors:
+        _LOGGER.error("Es wurden keine Sensoren erstellt!")
+
     async_add_entities(sensors, update_before_add=True)
+    _LOGGER.debug(f"{len(sensors)} Sensoren wurden erfolgreich hinzugefügt")
+    
 
 class GuntamagicDataUpdateCoordinator(DataUpdateCoordinator):
     def __init__(self, hass):
