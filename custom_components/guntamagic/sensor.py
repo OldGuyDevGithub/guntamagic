@@ -33,10 +33,10 @@ async def async_setup_entry(hass, entry, async_add_entities):
     url = f"http://{ip_address}/ext/daqdata.cgi?key={key}"
 
     try:
-        response = aiohttp.get(url, timeout=10)
-        response.raise_for_status()
-        data = response.json()
-    except aiohttp.RequestException as error:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, timeout=10) as response:
+                data = await response.json()
+    except aiohttp.ClientError as error:
         _LOGGER.error("Error fetching data: %s", error)
         return
 
@@ -52,7 +52,6 @@ async def async_setup_entry(hass, entry, async_add_entities):
 
     _LOGGER.debug("Erstellte Sensoren: %s", [s.name for s in sensors])
     async_add_entities(sensors, True)
-
 
     _LOGGER.debug("Guntamagic Sensoren hinzugefügt: %s", [sensor.name for sensor in sensors])
 
