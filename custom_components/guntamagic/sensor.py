@@ -33,10 +33,10 @@ async def async_setup_entry(hass, entry, async_add_entities):
     url = f"http://{ip_address}/ext/daqdata.cgi?key={key}"
 
     try:
-        response = requests.get(url, timeout=10)
+        response = aiohttp.get(url, timeout=10)
         response.raise_for_status()
         data = response.json()
-    except requests.RequestException as error:
+    except aiohttp.RequestException as error:
         _LOGGER.error("Error fetching data: %s", error)
         return
 
