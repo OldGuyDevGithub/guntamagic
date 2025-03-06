@@ -16,7 +16,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(hass, entry, async_add_entities):
 
-    MAPPING_FILE = os.path.join(os.path.dirname(__file__), "mapping.json")
+    MAPPING_FILE = os.path.join(os.path.dirname(__file__), "modbus_mapping.json")
 
 def load_mapping():
     try:
