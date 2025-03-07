@@ -3,19 +3,19 @@ import voluptuous as vol
 
 from homeassistant import config_entries
 from homeassistant.const import CONF_IP_ADDRESS
-import homeassistant.helpers.config_validation as cv
 
 from .const import DOMAIN, CONF_KEY
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class GuntamagicConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for Guntamagic."""
+    "Handle a config flow for Guntamagic."
 
     VERSION = 1
 
     async def async_step_user(self, user_input=None):
-        """Handle the initial step."""
+        "Handle the initial step."
         errors = {}
 
         if user_input is not None:
