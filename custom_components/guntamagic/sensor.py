@@ -1,6 +1,5 @@
 import logging
 import json
-import aiohttp
 from datetime import timedelta
 import os
 
@@ -54,7 +53,19 @@ class GuntamagicDataUpdateCoordinator(DataUpdateCoordinator):
             async with session.get(f"http://{ip_address}/ext/daqdata.cgi?key={key}") as response:
                 if response.status != 200:
                     raise UpdateFailed(f"Fehlerhafte Antwort: {response.status}")
-                return await response.json()
+                data = await response.json()
+                _LOGGER.debug("Received data from API: %s", data)  # Log response
+
+                if not isinstance(data, list):
+                    raise UpdateFailed("Unerwartetes Format: API sollte eine Liste zurückgeben")
+
+                # Load mapping file (sensor_id → index in list)
+                mapping = load_mapping()
+
+                # Convert list to dictionary using mapping
+                sensor_data = {sensor_id: data[details["index"]] for sensor_id, details in mapping.items() if details["index"] < len(data)}
+
+                return sensor_data
         except Exception as e:
             raise UpdateFailed(f"Fehler beim Abrufen der Daten: {e}")
 
@@ -73,7 +84,10 @@ class GuntamagicSensor(SensorEntity):
 
     @property
     def state(self):
-        return self.coordinator.data.get(self._sensor_id)
+        """Returns the sensor value from coordinator data."""
+        if not self.coordinator.data:
+            return None  # Prevents crashes if data isn't available yet
+        return self.coordinator.data.get(self._sensor_id, "N/A")  # Use .get() to avoid errors
 
     @property
     def unique_id(self):
@@ -82,4 +96,3 @@ class GuntamagicSensor(SensorEntity):
     @property
     def should_poll(self):
         return False
-
