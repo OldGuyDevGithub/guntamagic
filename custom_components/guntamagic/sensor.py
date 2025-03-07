@@ -6,10 +6,12 @@ import os
 
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.helpers.update_coordinator import (DataUpdateCoordinator, UpdateFailed)
+from .const import DOMAIN, CONF_KEY
 
 _LOGGER = logging.getLogger(__name__)
 SCAN_INTERVAL = timedelta(seconds=30)
 MAPPING_FILE = os.path.join(os.path.dirname(__file__), "modbus_mapping.json")
+
 
 
 def load_mapping():
@@ -23,13 +25,13 @@ def load_mapping():
 
 async def async_setup_entry(hass, entry, async_add_entities):
     try:
-        with open(hass.config.path(MAPPING_FILE), "r", encoding="utf-8") as file:
+        with open(MAPPING_FILE, "r", encoding="utf-8") as file:
             mapping = json.load(file)
     except Exception as e:
         _LOGGER.error("Fehler beim Laden des Mapping-Files: %s", e)
         return
 
-    coordinator = GuntamagicDataUpdateCoordinator(hass)
+    coordinator = GuntamagicDataUpdateCoordinator(hass, entry)
     await coordinator.async_config_entry_first_refresh()
     
     sensors = [GuntamagicSensor(coordinator, sensor_id, details) for sensor_id, details in mapping.items()]
@@ -37,19 +39,22 @@ async def async_setup_entry(hass, entry, async_add_entities):
 
 
 class GuntamagicDataUpdateCoordinator(DataUpdateCoordinator):
-    def __init__(self, hass):
+    def __init__(self, hass, entry):
         super().__init__(
             hass, _LOGGER, name="guntamagic_sensors", update_interval=SCAN_INTERVAL
         )
         self.hass = hass
+        self.entry = entry
 
     async def _async_update_data(self):
+        session = self.hass.helpers.aiohttp_client.async_get_clientsession(self.hass)  # Use HA session
+        ip_address = self.entry.data[CONF_IP_ADDRESS]
+        key = self.entry.data[CONF_KEY]
         try:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(f"http://{ip_address}/ext/daqdata.cgi?key={key}") as response:
-                    if response.status != 200:
-                        raise UpdateFailed(f"Fehlerhafte Antwort: {response.status}")
-                    return await response.json()
+            async with session.get(f"http://{ip_address}/ext/daqdata.cgi?key={key}") as response:
+                if response.status != 200:
+                    raise UpdateFailed(f"Fehlerhafte Antwort: {response.status}")
+                return await response.json()
         except Exception as e:
             raise UpdateFailed(f"Fehler beim Abrufen der Daten: {e}")
 
@@ -78,5 +83,3 @@ class GuntamagicSensor(SensorEntity):
     def should_poll(self):
         return False
 
-    async def async_update(self):
-        await self.coordinator.async_request_refresh()
