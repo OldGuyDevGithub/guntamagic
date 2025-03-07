@@ -6,12 +6,12 @@ import os
 
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.helpers.update_coordinator import (DataUpdateCoordinator, UpdateFailed)
-from .const import DOMAIN, CONF_KEY
+from homeassistant.const import CONF_IP_ADDRESS
+from .const import CONF_KEY
 
 _LOGGER = logging.getLogger(__name__)
 SCAN_INTERVAL = timedelta(seconds=30)
 MAPPING_FILE = os.path.join(os.path.dirname(__file__), "modbus_mapping.json")
-
 
 
 def load_mapping():
