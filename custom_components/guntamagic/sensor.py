@@ -78,6 +78,12 @@ class GuntamagicSensor(SensorEntity):
         self._unit = details.get("unit", None)
         self._attr_native_unit_of_measurement = self._unit
 
+    async def async_added_to_hass(self):
+        """Registriere den Listener für automatische Updates."""
+        self.async_on_remove(
+            self.coordinator.async_add_listener(self.async_write_ha_state)
+        )
+
     @property
     def name(self):
         return self._name
