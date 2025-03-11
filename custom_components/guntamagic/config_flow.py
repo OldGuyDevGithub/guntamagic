@@ -7,13 +7,6 @@ from .const import DOMAIN, CONF_IP_ADDRESS, CONF_KEY, CONF_NAME
 
 _LOGGER = logging.getLogger(__name__)
 
-DATA_SCHEMA = vol.Schema({
-    vol.Required(CONF_IP_ADDRESS): cv.string,
-    vol.Required(CONF_KEY): cv.string,
-    vol.Required(CONF_NAME): cv.string,
-})
-
-
 class GuntamagicConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     "Handle a config flow for Guntamagic."
 
@@ -28,6 +21,12 @@ class GuntamagicConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(
             step_id="user",
-            data_schema=DATA_SCHEMA,
+            data_schema=vol.Schema(
+                {
+                    vol.Required(CONF_NAME): cv.string,
+                    vol.Required(CONF_IP_ADDRESS): cv.string,
+                    vol.Required(CONF_KEY): cv.string,
+                }
+            ),
             errors=errors,
         )
