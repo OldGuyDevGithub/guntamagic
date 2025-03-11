@@ -5,8 +5,7 @@ import os
 
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.helpers.update_coordinator import (DataUpdateCoordinator, UpdateFailed)
-from homeassistant.const import CONF_IP_ADDRESS, CONF_NAME
-from .const import CONF_KEY
+from .const import CONF_KEY, CONF_IP_ADDRESS, CONF_NAME
 
 _LOGGER = logging.getLogger(__name__)
 SCAN_INTERVAL = timedelta(seconds=30)
