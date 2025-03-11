@@ -98,7 +98,7 @@ class GuntamagicSensor(SensorEntity):
 
     @property
     def unique_id(self):
-        return f"guntamagic_{self._user_name}_{self._sensor_id}"
+        return f"guntamagic_{self._entity_name}_{self._sensor_id}"
 
     @property
     def should_poll(self):
