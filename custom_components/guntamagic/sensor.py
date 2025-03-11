@@ -79,6 +79,8 @@ class GuntamagicSensor(SensorEntity):
         self._unit = details.get("unit", None)
         self._entity_name = entity_name
         self._attr_native_unit_of_measurement = self._unit
+        self._attr_unique_id = f"{entity_name.lower()}_{sensor_id}"  # EINDEUTIGE ENTITY-ID
+        self._attr_entity_id = f"sensor.{entity_name.lower()}_{self._name.replace(' ', '_').lower()}"  # ENTITY-ID FÜR HOME ASSISTANT
 
     async def async_added_to_hass(self):
         """Registriere den Listener für automatische Updates."""
