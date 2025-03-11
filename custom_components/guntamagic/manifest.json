@@ -2,7 +2,7 @@
   "domain": "guntamagic",
   "name": "Guntamagic Sensor",
   "loggers":"custom_components.guntamagic",
-  "documentation": "https://github.com/OldGuyDevGithub/hass-guntamagic",
+  "documentation": "https://github.com/OldGuyDevGithub/guntamagic",
   "requirements": [],
   "codeowners": ["@OldGuyDevGithub"],
   "iot_class": "local_polling",

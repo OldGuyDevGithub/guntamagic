@@ -1,12 +1,17 @@
 import logging
 import voluptuous as vol
+import homeassistant.helpers.config_validation as cv
 
 from homeassistant import config_entries
-from homeassistant.const import CONF_IP_ADDRESS
-
-from .const import DOMAIN, CONF_KEY
+from .const import DOMAIN, CONF_IP_ADDRESS, CONF_KEY, CONF_NAME
 
 _LOGGER = logging.getLogger(__name__)
+
+DATA_SCHEMA = vol.Schema({
+    vol.Required(CONF_IP_ADDRESS): cv.string,
+    vol.Required(CONF_KEY): cv.string,
+    vol.Required(CONF_NAME): cv.string,
+})
 
 
 class GuntamagicConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -23,9 +28,6 @@ class GuntamagicConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         return self.async_show_form(
             step_id="user",
-            data_schema=vol.Schema({
-                vol.Required(CONF_IP_ADDRESS): str,
-                vol.Required(CONF_KEY): str,
-            }),
+            data_schema=DATA_SCHEMA,
             errors=errors,
         )
