@@ -5,7 +5,7 @@ import os
 
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.helpers.update_coordinator import (DataUpdateCoordinator, UpdateFailed)
-from homeassistant.const import CONF_IP_ADDRESS
+from homeassistant.const import CONF_IP_ADDRESS, CONF_NAME
 from .const import CONF_KEY
 
 _LOGGER = logging.getLogger(__name__)
@@ -30,10 +30,12 @@ async def async_setup_entry(hass, entry, async_add_entities):
         _LOGGER.error("Fehler beim Laden des Mapping-Files: %s", e)
         return
 
+    entity_name = entry.data.get(CONF_NAME, "Guntamagic") 
+
     coordinator = GuntamagicDataUpdateCoordinator(hass, entry)
     await coordinator.async_config_entry_first_refresh()
     
-    sensors = [GuntamagicSensor(coordinator, sensor_id, details) for sensor_id, details in mapping.items()]
+    sensors = [GuntamagicSensor(coordinator, sensor_id, details, entity_name) for sensor_id, details in mapping.items()]
     async_add_entities(sensors, update_before_add=True)
 
 
@@ -71,11 +73,12 @@ class GuntamagicDataUpdateCoordinator(DataUpdateCoordinator):
 
 
 class GuntamagicSensor(SensorEntity):
-    def __init__(self, coordinator, sensor_id, details):
+    def __init__(self, coordinator, sensor_id, details, entity_name):
         self.coordinator = coordinator
         self._sensor_id = sensor_id
         self._name = details["name"]
         self._unit = details.get("unit", None)
+        self._entity_name = entity_name
         self._attr_native_unit_of_measurement = self._unit
 
     async def async_added_to_hass(self):
@@ -86,8 +89,7 @@ class GuntamagicSensor(SensorEntity):
 
     @property
     def name(self):
-        return self._name
-
+        return f"{self._entity_name} {self._name}" 
     @property
     def state(self):
         """Returns the sensor value from coordinator data."""
@@ -97,7 +99,7 @@ class GuntamagicSensor(SensorEntity):
 
     @property
     def unique_id(self):
-        return f"guntamagic_{self._sensor_id}"
+        return f"guntamagic_{self._user_name}_{self._sensor_id}"
 
     @property
     def should_poll(self):
