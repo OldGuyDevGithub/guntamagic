@@ -29,12 +29,13 @@ async def async_setup_entry(hass, entry, async_add_entities):
         _LOGGER.error("Fehler beim Laden des Mapping-Files: %s", e)
         return
 
-    entity_name = entry.data.get(CONF_NAME, "Guntamagic") 
+    entity_name = entry.data.get(CONF_NAME, "Guntamagic")
 
     coordinator = GuntamagicDataUpdateCoordinator(hass, entry)
     await coordinator.async_config_entry_first_refresh()
     
-    sensors = [GuntamagicSensor(coordinator, sensor_id, details, entity_name) for sensor_id, details in mapping.items()]
+    sensors = [GuntamagicSensor(coordinator, sensor_id, details, entity_name, entry.entry_id)
+                for sensor_id, details in mapping.items()]
     async_add_entities(sensors, update_before_add=True)
 
 
@@ -72,12 +73,13 @@ class GuntamagicDataUpdateCoordinator(DataUpdateCoordinator):
 
 
 class GuntamagicSensor(SensorEntity):
-    def __init__(self, coordinator, sensor_id, details, entity_name):
+    def __init__(self, coordinator, sensor_id, details, entity_name, entry_id):
         self.coordinator = coordinator
         self._sensor_id = sensor_id
         self._name = details["name"]
         self._unit = details.get("unit", None)
         self._entity_name = entity_name
+        self._entry_id = entry_id
         self._attr_native_unit_of_measurement = self._unit
         self._attr_unique_id = f"{entity_name.lower()}_{sensor_id}"  # EINDEUTIGE ENTITY-ID
         self._attr_entity_id = f"sensor.{entity_name.lower()}_{self._name.replace(' ', '_').lower()}"  # ENTITY-ID FÜR HOME ASSISTANT
@@ -105,3 +107,14 @@ class GuntamagicSensor(SensorEntity):
     @property
     def should_poll(self):
         return False
+    
+    @property
+    def device_info(self):
+        """Erstellt ein Gerät pro Konfiguration."""
+        return {
+            "identifiers": {(DOMAIN, self._entry_id)},
+            "name": self._entity_name,  # Name des Geräts (z.B. "Kessel1")
+            "manufacturer": "Guntamagic",
+            "model": "Modbus Sensor",
+            "sw_version": "1.0",
+        }
