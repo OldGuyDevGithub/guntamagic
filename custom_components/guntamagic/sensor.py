@@ -68,7 +68,7 @@ class GuntamagicDataUpdateCoordinator(DataUpdateCoordinator):
                 if not isinstance(data, list):
                     raise UpdateFailed("Unerwartetes Format: API sollte eine Liste zurückgeben")
 
-                mapping = load_mapping()
+                mapping = await load_mapping()
 
                 # Sicherstellen, dass Mapping-Index nicht die Datenlänge übersteigt
                 sensor_data = {
