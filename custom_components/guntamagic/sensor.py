@@ -6,6 +6,7 @@ import os
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.helpers.update_coordinator import (DataUpdateCoordinator, UpdateFailed)
 from .const import CONF_KEY, CONF_IP_ADDRESS, CONF_NAME, DOMAIN
+from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 _LOGGER = logging.getLogger(__name__)
 SCAN_INTERVAL = timedelta(seconds=30)
@@ -32,7 +33,10 @@ async def async_setup_entry(hass, entry, async_add_entities):
     entity_name = entry.data.get(CONF_NAME, "Guntamagic")
 
     coordinator = GuntamagicDataUpdateCoordinator(hass, entry)
-    await coordinator.async_config_entry_first_refresh()
+    if entry.state == ConfigEntryState.SETUP_IN_PROGRESS:
+        await coordinator.async_config_entry_first_refresh()
+    else:
+        await coordinator.async_refresh()
     
     sensors = [GuntamagicSensor(coordinator, sensor_id, details, entity_name, entry.entry_id)
                 for sensor_id, details in mapping.items()]
@@ -48,7 +52,7 @@ class GuntamagicDataUpdateCoordinator(DataUpdateCoordinator):
         self.entry = entry
 
     async def _async_update_data(self):
-        session = self.hass.helpers.aiohttp_client.async_get_clientsession(self.hass)  # Use HA session
+        session = async_get_clientsession(self.hass)
         ip_address = self.entry.data[CONF_IP_ADDRESS]
         key = self.entry.data[CONF_KEY]
         try:
