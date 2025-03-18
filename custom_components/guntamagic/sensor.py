@@ -1,3 +1,4 @@
+import asyncio
 import logging
 import json
 from datetime import timedelta
@@ -13,28 +14,26 @@ SCAN_INTERVAL = timedelta(seconds=30)
 MAPPING_FILE = os.path.join(os.path.dirname(__file__), "modbus_mapping.json")
 
 
-def load_mapping():
+async def load_mapping():
+    """Lädt das Mapping asynchron."""
     try:
-        with open(MAPPING_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
+        return await asyncio.to_thread(load_mapping_sync)
     except Exception as e:
         _LOGGER.error("Fehler beim Laden des Mappings: %s", e)
         return {}
 
+def load_mapping_sync():
+    """Synchrones Lesen der Mapping-Datei (für asyncio.to_thread)."""
+    with open(MAPPING_FILE, "r", encoding="utf-8") as f:
+        return json.load(f)
 
 async def async_setup_entry(hass, entry, async_add_entities):
-    try:
-        with open(MAPPING_FILE, "r", encoding="utf-8") as file:
-            mapping = json.load(file)
-    except Exception as e:
-        _LOGGER.error("Fehler beim Laden des Mapping-Files: %s", e)
-        return
+    mapping = await load_mapping()
 
     entity_name = entry.data.get(CONF_NAME, "Guntamagic")
 
     coordinator = GuntamagicDataUpdateCoordinator(hass, entry)
     
-    # Prüfe den Entry-State für `async_config_entry_first_refresh`
     if entry.state == "SETUP_IN_PROGRESS":
         await coordinator.async_config_entry_first_refresh()
     else:
