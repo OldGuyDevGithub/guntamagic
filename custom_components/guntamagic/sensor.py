@@ -33,8 +33,6 @@ async def async_setup_entry(hass, entry, async_add_entities):
     entity_name = entry.data.get(CONF_NAME, "Guntamagic")
 
     coordinator = GuntamagicDataUpdateCoordinator(hass, entry)
-    if entry.entry_id in hass.data.get(DOMAIN, {}):
-        return  # Verhindert doppelte Initialisierung des Coordinators
 
     if not coordinator.last_update_success:
         await coordinator.async_config_entry_first_refresh()
