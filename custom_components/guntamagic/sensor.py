@@ -3,7 +3,6 @@ import json
 from datetime import timedelta
 import os
 
-from homeassistant.config_entries import ConfigEntryState
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.helpers.update_coordinator import (DataUpdateCoordinator, UpdateFailed)
 from .const import CONF_KEY, CONF_IP_ADDRESS, CONF_NAME, DOMAIN
@@ -34,7 +33,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
     entity_name = entry.data.get(CONF_NAME, "Guntamagic")
 
     coordinator = GuntamagicDataUpdateCoordinator(hass, entry)
-    if entry.state == ConfigEntryState.SETUP_IN_PROGRESS:
+    if not coordinator.last_update_success:
         await coordinator.async_config_entry_first_refresh()
     else:
         await coordinator.async_refresh()
