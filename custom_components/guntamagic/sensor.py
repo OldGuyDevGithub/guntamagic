@@ -4,7 +4,7 @@ from datetime import timedelta
 import os
 
 from homeassistant.components.sensor import SensorEntity
-from homeassistant.helpers.update_coordinator import (DataUpdateCoordinator, UpdateFailed)
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from .const import CONF_KEY, CONF_IP_ADDRESS, CONF_NAME, DOMAIN
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
@@ -33,13 +33,17 @@ async def async_setup_entry(hass, entry, async_add_entities):
     entity_name = entry.data.get(CONF_NAME, "Guntamagic")
 
     coordinator = GuntamagicDataUpdateCoordinator(hass, entry)
-    if not coordinator.last_update_success:
+    
+    # Prüfe den Entry-State für `async_config_entry_first_refresh`
+    if entry.state == "SETUP_IN_PROGRESS":
         await coordinator.async_config_entry_first_refresh()
     else:
         await coordinator.async_refresh()
-    
-    sensors = [GuntamagicSensor(coordinator, sensor_id, details, entity_name, entry.entry_id)
-                for sensor_id, details in mapping.items()]
+
+    sensors = [
+        GuntamagicSensor(coordinator, sensor_id, details, entity_name, entry.entry_id)
+        for sensor_id, details in mapping.items()
+    ]
     async_add_entities(sensors, update_before_add=True)
 
 
@@ -60,16 +64,19 @@ class GuntamagicDataUpdateCoordinator(DataUpdateCoordinator):
                 if response.status != 200:
                     raise UpdateFailed(f"Fehlerhafte Antwort: {response.status}")
                 data = await response.json()
-                _LOGGER.debug("Received data from API: %s", data)  # Log response
+                _LOGGER.debug("Received data from API: %s", data)
 
                 if not isinstance(data, list):
                     raise UpdateFailed("Unerwartetes Format: API sollte eine Liste zurückgeben")
 
-                # Load mapping file (sensor_id → index in list)
                 mapping = load_mapping()
 
-                # Convert list to dictionary using mapping
-                sensor_data = {sensor_id: data[details["index"]] for sensor_id, details in mapping.items() if details["index"] < len(data)}
+                # Sicherstellen, dass Mapping-Index nicht die Datenlänge übersteigt
+                sensor_data = {
+                    sensor_id: data[details["index"]]
+                    for sensor_id, details in mapping.items()
+                    if details["index"] < len(data)
+                }
 
                 return sensor_data
         except Exception as e:
@@ -85,24 +92,23 @@ class GuntamagicSensor(SensorEntity):
         self._entity_name = entity_name
         self._entry_id = entry_id
         self._attr_native_unit_of_measurement = self._unit
-        self._attr_unique_id = f"{entity_name.lower()}_{sensor_id}"  # EINDEUTIGE ENTITY-ID
-        self._attr_entity_id = f"sensor.{entity_name.lower()}_{self._name.replace(' ', '_').lower()}"  # ENTITY-ID FÜR HOME ASSISTANT
+        self._attr_unique_id = f"{entry_id}_{sensor_id}"  # EINDEUTIGE ENTITY-ID
+        self._attr_entity_id = f"sensor.{entity_name.lower()}_{self._name.replace(' ', '_').lower()}"
 
     async def async_added_to_hass(self):
         """Registriere den Listener für automatische Updates."""
-        self.async_on_remove(
-            self.coordinator.async_add_listener(self.async_write_ha_state)
-        )
+        self.async_on_remove(self.coordinator.async_add_listener(self.async_write_ha_state))
 
     @property
     def name(self):
-        return f"{self._entity_name} {self._name}" 
+        return f"{self._entity_name} {self._name}"
+
     @property
     def state(self):
         """Returns the sensor value from coordinator data."""
         if not self.coordinator.data:
-            return None  # Prevents crashes if data isn't available yet
-        return self.coordinator.data.get(self._sensor_id, "N/A")  # Use .get() to avoid errors
+            return None
+        return self.coordinator.data.get(self._sensor_id, "N/A")
 
     @property
     def unique_id(self):
@@ -111,13 +117,13 @@ class GuntamagicSensor(SensorEntity):
     @property
     def should_poll(self):
         return False
-    
+
     @property
     def device_info(self):
         """Erstellt ein Gerät pro Konfiguration."""
         return {
             "identifiers": {(DOMAIN, self._entry_id)},
-            "name": self._entity_name,  # Name des Geräts (z.B. "Kessel1")
+            "name": self._entity_name,  
             "manufacturer": "Guntamagic",
             "model": "Modbus Sensor",
             "sw_version": "1.0",
