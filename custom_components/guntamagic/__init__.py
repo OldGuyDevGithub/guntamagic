@@ -15,9 +15,6 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     _LOGGER.debug(" async_setup_entry in __init__.py aufgerufen.")
     hass.data.setdefault(DOMAIN, {})
     hass.data[DOMAIN][entry.entry_id] = entry.data
-
-    if entry.entry_id in hass.data[DOMAIN]:
-        return False  # Verhindert doppelte Registrierung
     
     await hass.config_entries.async_forward_entry_setups(entry, ["sensor"])
 
