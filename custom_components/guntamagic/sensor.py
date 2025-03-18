@@ -3,6 +3,7 @@ import json
 from datetime import timedelta
 import os
 
+from homeassistant.config_entries import ConfigEntryState
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.helpers.update_coordinator import (DataUpdateCoordinator, UpdateFailed)
 from .const import CONF_KEY, CONF_IP_ADDRESS, CONF_NAME, DOMAIN
