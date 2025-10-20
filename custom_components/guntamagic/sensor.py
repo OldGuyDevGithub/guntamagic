@@ -28,9 +28,9 @@ def load_mapping_sync(mapping_file):
         return json.load(f)
 
 async def async_setup_entry(hass, entry, async_add_entities):
-    mapping = await load_mapping()
-
     entity_name = entry.data.get(CONF_NAME, "Guntamagic")
+    mapping_file = entry.data.get(CONF_MAPPING_FILE)
+    mapping = await load_mapping(mapping_file)
 
     coordinator = GuntamagicDataUpdateCoordinator(hass, entry)
     
