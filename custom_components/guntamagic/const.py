@@ -1,5 +1,15 @@
 DOMAIN = "guntamagic"
-CONF_IP_ADDRESS = "IP address of the entity (e.g. 192.168.1.10)"
-CONF_KEY = "Your key for the log gasifier interface provided by guntamatic"
-CONF_NAME = "Name of the entity (e.g. BMK20)"
+
+# Stabile Keys für Home Assistant
+CONF_IP_ADDRESS = "ip_address"
+CONF_KEY = "api_key"
+CONF_NAME = "name"
+CONF_MAPPING = "mapping"
 CONF_MAPPING_FILE = "mapping_file"
+
+# Optional: Labels für Dropdown
+CONF_MAPPING_OPTIONS = {
+    "modbus_mapping_biostar.json": "Biostar",
+    "modbus_mapping_bmk_hybrid.json": "BMK Hybrid",
+    "modbus_mapping_bmk.json": "BMK",
+}
