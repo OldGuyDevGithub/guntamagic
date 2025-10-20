@@ -6,25 +6,25 @@ import os
 
 from homeassistant.components.sensor import SensorEntity
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
-from .const import CONF_KEY, CONF_IP_ADDRESS, CONF_NAME, DOMAIN
+from .const import CONF_KEY, CONF_IP_ADDRESS, CONF_NAME, CONF_MAPPING_FILE, DOMAIN
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 _LOGGER = logging.getLogger(__name__)
 SCAN_INTERVAL = timedelta(seconds=30)
-MAPPING_FILE = os.path.join(os.path.dirname(__file__), "modbus_mapping.json")
 
 
-async def load_mapping():
+async def load_mapping(file_name):
     """Lädt das Mapping asynchron."""
     try:
-        return await asyncio.to_thread(load_mapping_sync)
+        mapping_file = os.path.join(os.path.dirname(__file__), file_name)
+        return await asyncio.to_thread(load_mapping_sync, mapping_file)
     except Exception as e:
         _LOGGER.error("Fehler beim Laden des Mappings: %s", e)
         return {}
 
-def load_mapping_sync():
+def load_mapping_sync(mapping_file):
     """Synchrones Lesen der Mapping-Datei (für asyncio.to_thread)."""
-    with open(MAPPING_FILE, "r", encoding="utf-8") as f:
+    with open(mapping_file, "r", encoding="utf-8") as f:
         return json.load(f)
 
 async def async_setup_entry(hass, entry, async_add_entities):
@@ -124,6 +124,6 @@ class GuntamagicSensor(SensorEntity):
             "identifiers": {(DOMAIN, self._entry_id)},
             "name": self._entity_name,  
             "manufacturer": "Guntamagic",
-            "model": "Modbus Sensor",
+            "model": self.coordinator.entry.data.get(CONF_MAPPING_FILE),
             "sw_version": "1.0",
         }
