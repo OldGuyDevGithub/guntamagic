@@ -3,15 +3,10 @@ import voluptuous as vol
 import homeassistant.helpers.config_validation as cv
 
 from homeassistant import config_entries
-from .const import DOMAIN, CONF_IP_ADDRESS, CONF_KEY, CONF_NAME, CONF_MAPPING_FILE
+from .const import DOMAIN, CONF_IP_ADDRESS, CONF_KEY, CONF_NAME, CONF_MAPPING, CONF_MAPPING_OPTIONS
 
 _LOGGER = logging.getLogger(__name__)
 
-MAPPING_OPTIONS = [
-    "modbus_mapping_biostar.json",
-    "modbus_mapping_bmk.json",
-    "modbus_mapping_bmk_hybrid.json"
-]
 
 class GuntamagicConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     "Handle a config flow for Guntamagic."
@@ -32,7 +27,7 @@ class GuntamagicConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                     vol.Required(CONF_NAME): cv.string,
                     vol.Required(CONF_IP_ADDRESS): cv.string,
                     vol.Required(CONF_KEY): cv.string,
-                    vol.Required(CONF_MAPPING_FILE, default=MAPPING_OPTIONS[0]): vol.In(MAPPING_OPTIONS)
+                    vol.Required(CONF_MAPPING): vol.In(CONF_MAPPING_OPTIONS)
                 }
             ),
             errors=errors,
