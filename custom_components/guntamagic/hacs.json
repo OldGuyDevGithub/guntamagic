@@ -7,5 +7,6 @@
     "local_location": "/custom_components/guntamagic/",
     "filename": "manifest.json",
     "source_url": "https://github.com/deinrepo",
-    "image": "logo.png"
+    "image": "logo.png",
+    "zip_release": false 
 }
