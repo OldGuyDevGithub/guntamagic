@@ -1,0 +1,39 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Set up Guntamatic device",
+        "description": "Enter the connection details for your Guntamatic device.",
+        "data": {
+          "name": "Name",
+          "ip_address": "IP Address",
+          "api_key": "Modbus Key",
+          "mapping": "Device Type"
+        },
+        "data_description": {
+          "name": "A unique name for this device",
+          "ip_address": "The IP address of your Guntamatic device",
+          "api_key": "The Modbus key from guntamatic.com",
+          "mapping": "Select your Guntamatic device type"
+        }
+      }
+    },
+    "error": {
+      "no_mapping_selected": "Please select a device type",
+      "invalid_mapping": "Invalid device type selected"
+    },
+    "abort": {
+      "no_mapping_files_found": "No mapping files found. Please check the installation."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Guntamatic Options",
+        "data": {
+          "mapping": "Device Type"
+        }
+      }
+    }
+  }
+}

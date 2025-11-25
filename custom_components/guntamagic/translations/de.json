@@ -1,0 +1,39 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Guntamatic Gerät einrichten",
+        "description": "Geben Sie die Verbindungsdaten für Ihr Guntamatic Gerät ein.",
+        "data": {
+          "name": "Name",
+          "ip_address": "IP-Adresse",
+          "api_key": "Modbus-Schlüssel",
+          "mapping": "Gerätetyp"
+        },
+        "data_description": {
+          "name": "Ein eindeutiger Name für dieses Gerät",
+          "ip_address": "Die IP-Adresse Ihres Guntamatic Geräts",
+          "api_key": "Der Modbus-Schlüssel von guntamatic.com",
+          "mapping": "Wählen Sie Ihren Guntamatic Gerätetyp"
+        }
+      }
+    },
+    "error": {
+      "no_mapping_selected": "Bitte wählen Sie einen Gerätetyp aus",
+      "invalid_mapping": "Ungültiger Gerätetyp ausgewählt"
+    },
+    "abort": {
+      "no_mapping_files_found": "Keine Mapping-Dateien gefunden. Bitte überprüfen Sie die Installation."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Guntamatic Optionen",
+        "data": {
+          "mapping": "Gerätetyp"
+        }
+      }
+    }
+  }
+}
