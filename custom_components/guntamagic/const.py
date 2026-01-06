@@ -12,4 +12,5 @@ CONF_MAPPING_OPTIONS = {
     "modbus_mapping_biostar.json": "Biostar",
     "modbus_mapping_bmk_hybrid.json": "BMK Hybrid",
     "modbus_mapping_bmk.json": "BMK",
+    "modbus_mapping_bmk_vario.json": "BMK Vario",
 }
