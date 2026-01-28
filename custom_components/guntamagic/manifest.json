@@ -1,12 +1,12 @@
 {
   "domain": "guntamagic",
   "name": "Guntamagic Sensor",
-  "loggers":"custom_components.guntamagic",
+  "loggers":["custom_components.guntamagic"],
   "documentation": "https://github.com/OldGuyDevGithub/guntamagic",
   "requirements": [],
   "codeowners": ["@OldGuyDevGithub"],
   "iot_class": "local_polling",
-  "version": "0.0.2.4-pre",
+  "version": "0.0.2-pre.1",
   "config_flow": true,
   "logo": "logo.png",
   "icon": "icon.png"
