@@ -35,5 +35,370 @@
         }
       }
     }
+  },
+  "selector": {
+    "mapping": {
+      "options": {
+        "biostar": "Biostar",
+        "bmk": "BMK",
+        "bmk_hybrid": "BMK Hybrid",
+        "bmk_vario": "BMK Vario (Holz/Pellets)"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "outside_temperature": {
+        "name": "Außentemperatur"
+      },
+      "boiler_temperature": {
+        "name": "Kesseltemperatur"
+      },
+      "power": {
+        "name": "Leistung"
+      },
+      "co2_content": {
+        "name": "CO2 Gehalt"
+      },
+      "operating_code": {
+        "name": "Betriebscode"
+      },
+      "buffer_top": {
+        "name": "Puffer oben"
+      },
+      "buffer_bottom": {
+        "name": "Puffer unten"
+      },
+      "pump_hp0": {
+        "name": "Pumpe HP0"
+      },
+      "hot_water_0": {
+        "name": "Warmwasser 0"
+      },
+      "p_hot_water_0": {
+        "name": "P Warmwasser 0"
+      },
+      "hot_water_1": {
+        "name": "Warmwasser 1"
+      },
+      "p_hot_water_1": {
+        "name": "P Warmwasser 1"
+      },
+      "hot_water_2": {
+        "name": "Warmwasser 2"
+      },
+      "p_hot_water_2": {
+        "name": "P Warmwasser 2"
+      },
+      "room_temp_hc_0": {
+        "name": "Raumtemp. HK 0"
+      },
+      "heating_circuit_0": {
+        "name": "Heizkreis 0"
+      },
+      "room_temp_hc_1": {
+        "name": "Raumtemp. HK 1"
+      },
+      "flow_actual_1": {
+        "name": "Vorlauf Ist 1"
+      },
+      "heating_circuit_1": {
+        "name": "Heizkreis 1"
+      },
+      "room_temp_hc_2": {
+        "name": "Raumtemp. HK 2"
+      },
+      "flow_actual_2": {
+        "name": "Vorlauf Ist 2"
+      },
+      "heating_circuit_2": {
+        "name": "Heizkreis 2"
+      },
+      "room_temp_hc_3": {
+        "name": "Raumtemp. HK 3"
+      },
+      "heating_circuit_3": {
+        "name": "Heizkreis 3"
+      },
+      "room_temp_hc_4": {
+        "name": "Raumtemp. HK 4"
+      },
+      "flow_actual_4": {
+        "name": "Vorlauf Ist 4"
+      },
+      "heating_circuit_4": {
+        "name": "Heizkreis 4"
+      },
+      "room_temp_hc_5": {
+        "name": "Raumtemp. HK 5"
+      },
+      "flow_actual_5": {
+        "name": "Vorlauf Ist 5"
+      },
+      "heating_circuit_5": {
+        "name": "Heizkreis 5"
+      },
+      "room_temp_hc_6": {
+        "name": "Raumtemp. HK 6"
+      },
+      "heating_circuit_6": {
+        "name": "Heizkreis 6"
+      },
+      "room_temp_hc_7": {
+        "name": "Raumtemp. HK 7"
+      },
+      "flow_actual_7": {
+        "name": "Vorlauf Ist 7"
+      },
+      "heating_circuit_7": {
+        "name": "Heizkreis 7"
+      },
+      "room_temp_hc_8": {
+        "name": "Raumtemp. HK 8"
+      },
+      "flow_actual_8": {
+        "name": "Vorlauf Ist 8"
+      },
+      "heating_circuit_8": {
+        "name": "Heizkreis 8"
+      },
+      "boiler_release": {
+        "name": "Kesselfreigabe"
+      },
+      "program": {
+        "name": "Programm"
+      },
+      "program_hc0": {
+        "name": "Programm HK0"
+      },
+      "program_hc1": {
+        "name": "Programm HK1"
+      },
+      "program_hc2": {
+        "name": "Programm HK2"
+      },
+      "program_hc3": {
+        "name": "Programm HK3"
+      },
+      "program_hc4": {
+        "name": "Programm HK4"
+      },
+      "program_hc5": {
+        "name": "Programm HK5"
+      },
+      "program_hc6": {
+        "name": "Programm HK6"
+      },
+      "program_hc7": {
+        "name": "Programm HK7"
+      },
+      "program_hc8": {
+        "name": "Programm HK8"
+      },
+      "serial": {
+        "name": "Seriennummer"
+      },
+      "operating_hours": {
+        "name": "Betriebsstunden"
+      },
+      "service_time": {
+        "name": "Servicezeit"
+      },
+      "empty_ash_in": {
+        "name": "Asche leeren in"
+      },
+      "flow_actual_0": {
+        "name": "Vorlauf Ist 0"
+      },
+      "flow_actual_3": {
+        "name": "Vorlauf Ist 3"
+      },
+      "flow_actual_6": {
+        "name": "Vorlauf Ist 6"
+      },
+      "fuel_counter": {
+        "name": "Brennstoffzähler"
+      },
+      "buffer_charge": {
+        "name": "Pufferladung"
+      },
+      "buffer_top_0": {
+        "name": "Puffer oben 0"
+      },
+      "buffer_bottom_0": {
+        "name": "Puffer unten 0"
+      },
+      "buffer_top_1": {
+        "name": "Puffer oben 1"
+      },
+      "buffer_bottom_1": {
+        "name": "Puffer unten 1"
+      },
+      "buffer_top_2": {
+        "name": "Puffer oben 2"
+      },
+      "buffer_bottom_2": {
+        "name": "Puffer unten 2"
+      },
+      "p_additional_hw_0": {
+        "name": "P Zusatzwarmw. 0"
+      },
+      "p_additional_hw_1": {
+        "name": "P Zusatzwarmw. 1"
+      },
+      "p_additional_hw_2": {
+        "name": "P Zusatzwarmw. 2"
+      },
+      "remote_pump_0": {
+        "name": "Fernpumpe 0"
+      },
+      "remote_pump_1": {
+        "name": "Fernpumpe 1"
+      },
+      "remote_pump_2": {
+        "name": "Fernpumpe 2"
+      },
+      "buffer_t5": {
+        "name": "Puffer T5"
+      },
+      "buffer_t6": {
+        "name": "Puffer T6"
+      },
+      "buffer_t7": {
+        "name": "Puffer T7"
+      },
+      "additional_hw_0": {
+        "name": "Zusatzwarmw. 0"
+      },
+      "additional_hw_1": {
+        "name": "Zusatzwarmw. 1"
+      },
+      "additional_hw_2": {
+        "name": "Zusatzwarmw. 2"
+      },
+      "operation": {
+        "name": "Betrieb"
+      },
+      "buffer_middle": {
+        "name": "Puffer mitte"
+      },
+      "boiler_charge_pump": {
+        "name": "Kesselladepumpe"
+      },
+      "hot_water_pump_0": {
+        "name": "Warmwasserpumpe 0"
+      },
+      "hot_water_pump_1": {
+        "name": "Warmwasserpumpe 1"
+      },
+      "hot_water_pump_2": {
+        "name": "Warmwasserpumpe 2"
+      },
+      "heating_circuit_pump_0": {
+        "name": "Heizkreispumpe 0"
+      },
+      "room_temperature_hc_0": {
+        "name": "Raumtemperatur HK 0"
+      },
+      "room_temperature_hc_1": {
+        "name": "Raumtemperatur HK 1"
+      },
+      "heating_circuit_pump_1": {
+        "name": "Heizkreispumpe 1"
+      },
+      "room_temperature_hc_2": {
+        "name": "Raumtemperatur HK 2"
+      },
+      "heating_circuit_pump_2": {
+        "name": "Heizkreispumpe 2"
+      },
+      "heating_circuit_pump_3": {
+        "name": "Heizkreispumpe 3"
+      },
+      "room_temperature_hc_3": {
+        "name": "Raumtemperatur HK 3"
+      },
+      "room_temperature_hc_4": {
+        "name": "Raumtemperatur HK 4"
+      },
+      "heating_circuit_pump_4": {
+        "name": "Heizkreispumpe 4"
+      },
+      "room_temperature_hc_5": {
+        "name": "Raumtemperatur HK 5"
+      },
+      "heating_circuit_pump_5": {
+        "name": "Heizkreispumpe 5"
+      },
+      "heating_circuit_pump_6": {
+        "name": "Heizkreispumpe 6"
+      },
+      "room_temperature_hc_6": {
+        "name": "Raumtemperatur HK 6"
+      },
+      "room_temperature_hc_7": {
+        "name": "Raumtemperatur HK 7"
+      },
+      "heating_circuit_pump_7": {
+        "name": "Heizkreispumpe 7"
+      },
+      "room_temperature_hc_8": {
+        "name": "Raumtemperatur HK 8"
+      },
+      "heating_circuit_pump_8": {
+        "name": "Heizkreispumpe 8"
+      },
+      "mixer_remaining": {
+        "name": "Mischer Verbl."
+      },
+      "oil_boiler": {
+        "name": "Ölkessel"
+      },
+      "serial_number": {
+        "name": "Seriennummer"
+      },
+      "additional_hot_water_0": {
+        "name": "Zusatzwarmwasser 0"
+      },
+      "additional_hot_water_1": {
+        "name": "Zusatzwarmwasser 1"
+      },
+      "additional_hot_water_2": {
+        "name": "Zusatzwarmwasser 2"
+      },
+      "p_additional_hot_water_0": {
+        "name": "P Zusatzwarmwasser 0"
+      },
+      "p_additional_hot_water_1": {
+        "name": "P Zusatzwarmwasser 1"
+      },
+      "p_additional_hot_water_2": {
+        "name": "P Zusatzwarmwasser 2"
+      },
+      "operation_wood": {
+        "name": "Betrieb Holz"
+      },
+      "boiler_temperature_wood": {
+        "name": "Kesseltemperatur Holz"
+      },
+      "co2_wood": {
+        "name": "CO2 Holz"
+      },
+      "operating_hours_wood": {
+        "name": "Betriebsstd. Holz"
+      },
+      "boiler_temperature_pellets": {
+        "name": "Kesseltemperatur Pellets"
+      },
+      "co2_pellets": {
+        "name": "CO2 Pellets"
+      },
+      "operation_pellets": {
+        "name": "Betrieb Pellets"
+      },
+      "operating_hours_pellets": {
+        "name": "Betriebsstd. Pellets"
+      }
+    }
   }
 }

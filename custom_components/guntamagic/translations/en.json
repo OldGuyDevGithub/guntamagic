@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "Set up Guntamatic device",
+        "title": "Set up Guntamatic Device",
         "description": "Enter the connection details for your Guntamatic device.",
         "data": {
           "name": "Name",
@@ -33,6 +33,371 @@
         "data": {
           "mapping": "Device Type"
         }
+      }
+    }
+  },
+  "selector": {
+    "mapping": {
+      "options": {
+        "biostar": "Biostar",
+        "bmk": "BMK",
+        "bmk_hybrid": "BMK Hybrid",
+        "bmk_vario": "BMK Vario (Wood/Pellets)"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "outside_temperature": {
+        "name": "Outside Temperature"
+      },
+      "boiler_temperature": {
+        "name": "Boiler Temperature"
+      },
+      "power": {
+        "name": "Power"
+      },
+      "co2_content": {
+        "name": "CO2 Content"
+      },
+      "operating_code": {
+        "name": "Operating Code"
+      },
+      "buffer_top": {
+        "name": "Buffer Top"
+      },
+      "buffer_bottom": {
+        "name": "Buffer Bottom"
+      },
+      "pump_hp0": {
+        "name": "Pump HP0"
+      },
+      "hot_water_0": {
+        "name": "Hot Water 0"
+      },
+      "p_hot_water_0": {
+        "name": "P Hot Water 0"
+      },
+      "hot_water_1": {
+        "name": "Hot Water 1"
+      },
+      "p_hot_water_1": {
+        "name": "P Hot Water 1"
+      },
+      "hot_water_2": {
+        "name": "Hot Water 2"
+      },
+      "p_hot_water_2": {
+        "name": "P Hot Water 2"
+      },
+      "room_temp_hc_0": {
+        "name": "Room Temp. HC 0"
+      },
+      "heating_circuit_0": {
+        "name": "Heating Circuit 0"
+      },
+      "room_temp_hc_1": {
+        "name": "Room Temp. HC 1"
+      },
+      "flow_actual_1": {
+        "name": "Flow Actual 1"
+      },
+      "heating_circuit_1": {
+        "name": "Heating Circuit 1"
+      },
+      "room_temp_hc_2": {
+        "name": "Room Temp. HC 2"
+      },
+      "flow_actual_2": {
+        "name": "Flow Actual 2"
+      },
+      "heating_circuit_2": {
+        "name": "Heating Circuit 2"
+      },
+      "room_temp_hc_3": {
+        "name": "Room Temp. HC 3"
+      },
+      "heating_circuit_3": {
+        "name": "Heating Circuit 3"
+      },
+      "room_temp_hc_4": {
+        "name": "Room Temp. HC 4"
+      },
+      "flow_actual_4": {
+        "name": "Flow Actual 4"
+      },
+      "heating_circuit_4": {
+        "name": "Heating Circuit 4"
+      },
+      "room_temp_hc_5": {
+        "name": "Room Temp. HC 5"
+      },
+      "flow_actual_5": {
+        "name": "Flow Actual 5"
+      },
+      "heating_circuit_5": {
+        "name": "Heating Circuit 5"
+      },
+      "room_temp_hc_6": {
+        "name": "Room Temp. HC 6"
+      },
+      "heating_circuit_6": {
+        "name": "Heating Circuit 6"
+      },
+      "room_temp_hc_7": {
+        "name": "Room Temp. HC 7"
+      },
+      "flow_actual_7": {
+        "name": "Flow Actual 7"
+      },
+      "heating_circuit_7": {
+        "name": "Heating Circuit 7"
+      },
+      "room_temp_hc_8": {
+        "name": "Room Temp. HC 8"
+      },
+      "flow_actual_8": {
+        "name": "Flow Actual 8"
+      },
+      "heating_circuit_8": {
+        "name": "Heating Circuit 8"
+      },
+      "boiler_release": {
+        "name": "Boiler Release"
+      },
+      "program": {
+        "name": "Program"
+      },
+      "program_hc0": {
+        "name": "Program HC0"
+      },
+      "program_hc1": {
+        "name": "Program HC1"
+      },
+      "program_hc2": {
+        "name": "Program HC2"
+      },
+      "program_hc3": {
+        "name": "Program HC3"
+      },
+      "program_hc4": {
+        "name": "Program HC4"
+      },
+      "program_hc5": {
+        "name": "Program HC5"
+      },
+      "program_hc6": {
+        "name": "Program HC6"
+      },
+      "program_hc7": {
+        "name": "Program HC7"
+      },
+      "program_hc8": {
+        "name": "Program HC8"
+      },
+      "serial": {
+        "name": "Serial Number"
+      },
+      "operating_hours": {
+        "name": "Operating Hours"
+      },
+      "service_time": {
+        "name": "Service Time"
+      },
+      "empty_ash_in": {
+        "name": "Empty Ash In"
+      },
+      "flow_actual_0": {
+        "name": "Flow Actual 0"
+      },
+      "flow_actual_3": {
+        "name": "Flow Actual 3"
+      },
+      "flow_actual_6": {
+        "name": "Flow Actual 6"
+      },
+      "fuel_counter": {
+        "name": "Fuel Counter"
+      },
+      "buffer_charge": {
+        "name": "Buffer Charge"
+      },
+      "buffer_top_0": {
+        "name": "Buffer Top 0"
+      },
+      "buffer_bottom_0": {
+        "name": "Buffer Bottom 0"
+      },
+      "buffer_top_1": {
+        "name": "Buffer Top 1"
+      },
+      "buffer_bottom_1": {
+        "name": "Buffer Bottom 1"
+      },
+      "buffer_top_2": {
+        "name": "Buffer Top 2"
+      },
+      "buffer_bottom_2": {
+        "name": "Buffer Bottom 2"
+      },
+      "p_additional_hw_0": {
+        "name": "P Additional HW 0"
+      },
+      "p_additional_hw_1": {
+        "name": "P Additional HW 1"
+      },
+      "p_additional_hw_2": {
+        "name": "P Additional HW 2"
+      },
+      "remote_pump_0": {
+        "name": "Remote Pump 0"
+      },
+      "remote_pump_1": {
+        "name": "Remote Pump 1"
+      },
+      "remote_pump_2": {
+        "name": "Remote Pump 2"
+      },
+      "buffer_t5": {
+        "name": "Buffer T5"
+      },
+      "buffer_t6": {
+        "name": "Buffer T6"
+      },
+      "buffer_t7": {
+        "name": "Buffer T7"
+      },
+      "additional_hw_0": {
+        "name": "Additional HW 0"
+      },
+      "additional_hw_1": {
+        "name": "Additional HW 1"
+      },
+      "additional_hw_2": {
+        "name": "Additional HW 2"
+      },
+      "operation": {
+        "name": "Operation"
+      },
+      "buffer_middle": {
+        "name": "Buffer Middle"
+      },
+      "boiler_charge_pump": {
+        "name": "Boiler Charge Pump"
+      },
+      "hot_water_pump_0": {
+        "name": "Hot Water Pump 0"
+      },
+      "hot_water_pump_1": {
+        "name": "Hot Water Pump 1"
+      },
+      "hot_water_pump_2": {
+        "name": "Hot Water Pump 2"
+      },
+      "heating_circuit_pump_0": {
+        "name": "Heating Circuit Pump 0"
+      },
+      "room_temperature_hc_0": {
+        "name": "Room Temperature HC 0"
+      },
+      "room_temperature_hc_1": {
+        "name": "Room Temperature HC 1"
+      },
+      "heating_circuit_pump_1": {
+        "name": "Heating Circuit Pump 1"
+      },
+      "room_temperature_hc_2": {
+        "name": "Room Temperature HC 2"
+      },
+      "heating_circuit_pump_2": {
+        "name": "Heating Circuit Pump 2"
+      },
+      "heating_circuit_pump_3": {
+        "name": "Heating Circuit Pump 3"
+      },
+      "room_temperature_hc_3": {
+        "name": "Room Temperature HC 3"
+      },
+      "room_temperature_hc_4": {
+        "name": "Room Temperature HC 4"
+      },
+      "heating_circuit_pump_4": {
+        "name": "Heating Circuit Pump 4"
+      },
+      "room_temperature_hc_5": {
+        "name": "Room Temperature HC 5"
+      },
+      "heating_circuit_pump_5": {
+        "name": "Heating Circuit Pump 5"
+      },
+      "heating_circuit_pump_6": {
+        "name": "Heating Circuit Pump 6"
+      },
+      "room_temperature_hc_6": {
+        "name": "Room Temperature HC 6"
+      },
+      "room_temperature_hc_7": {
+        "name": "Room Temperature HC 7"
+      },
+      "heating_circuit_pump_7": {
+        "name": "Heating Circuit Pump 7"
+      },
+      "room_temperature_hc_8": {
+        "name": "Room Temperature HC 8"
+      },
+      "heating_circuit_pump_8": {
+        "name": "Heating Circuit Pump 8"
+      },
+      "mixer_remaining": {
+        "name": "Mixer Remaining"
+      },
+      "oil_boiler": {
+        "name": "Oil Boiler"
+      },
+      "serial_number": {
+        "name": "Serial Number"
+      },
+      "additional_hot_water_0": {
+        "name": "Additional Hot Water 0"
+      },
+      "additional_hot_water_1": {
+        "name": "Additional Hot Water 1"
+      },
+      "additional_hot_water_2": {
+        "name": "Additional Hot Water 2"
+      },
+      "p_additional_hot_water_0": {
+        "name": "P Additional Hot Water 0"
+      },
+      "p_additional_hot_water_1": {
+        "name": "P Additional Hot Water 1"
+      },
+      "p_additional_hot_water_2": {
+        "name": "P Additional Hot Water 2"
+      },
+      "operation_wood": {
+        "name": "Operation Wood"
+      },
+      "boiler_temperature_wood": {
+        "name": "Boiler Temperature Wood"
+      },
+      "co2_wood": {
+        "name": "CO2 Wood"
+      },
+      "operating_hours_wood": {
+        "name": "Operating Hours Wood"
+      },
+      "boiler_temperature_pellets": {
+        "name": "Boiler Temperature Pellets"
+      },
+      "co2_pellets": {
+        "name": "CO2 Pellets"
+      },
+      "operation_pellets": {
+        "name": "Operation Pellets"
+      },
+      "operating_hours_pellets": {
+        "name": "Operating Hours Pellets"
       }
     }
   }

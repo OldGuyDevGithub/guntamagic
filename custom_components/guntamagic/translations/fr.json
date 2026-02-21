@@ -1,0 +1,404 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configurer l'appareil Guntamatic",
+        "description": "Entrez les détails de connexion de votre appareil Guntamatic.",
+        "data": {
+          "name": "Nom",
+          "ip_address": "Adresse IP",
+          "api_key": "Clé Modbus",
+          "mapping": "Type d'appareil"
+        },
+        "data_description": {
+          "name": "Un nom unique pour cet appareil",
+          "ip_address": "L'adresse IP de votre appareil Guntamatic",
+          "api_key": "La clé Modbus de guntamatic.com",
+          "mapping": "Sélectionnez votre type d'appareil Guntamatic"
+        }
+      }
+    },
+    "error": {
+      "no_mapping_selected": "Veuillez sélectionner un type d'appareil",
+      "invalid_mapping": "Type d'appareil sélectionné non valide"
+    },
+    "abort": {
+      "no_mapping_files_found": "Aucun fichier de mapping trouvé. Veuillez vérifier l'installation."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Options Guntamatic",
+        "data": {
+          "mapping": "Type d'appareil"
+        }
+      }
+    }
+  },
+  "selector": {
+    "mapping": {
+      "options": {
+        "biostar": "Biostar",
+        "bmk": "BMK",
+        "bmk_hybrid": "BMK Hybrid",
+        "bmk_vario": "BMK Vario (Bois/Pellets)"
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "outside_temperature": {
+        "name": "Température extérieure"
+      },
+      "boiler_temperature": {
+        "name": "Température de chaudière"
+      },
+      "power": {
+        "name": "Puissance"
+      },
+      "co2_content": {
+        "name": "Teneur en CO2"
+      },
+      "operating_code": {
+        "name": "Code de fonctionnement"
+      },
+      "buffer_top": {
+        "name": "Tampon haut"
+      },
+      "buffer_bottom": {
+        "name": "Tampon bas"
+      },
+      "pump_hp0": {
+        "name": "Pompe HP0"
+      },
+      "hot_water_0": {
+        "name": "Eau chaude 0"
+      },
+      "p_hot_water_0": {
+        "name": "P Eau chaude 0"
+      },
+      "hot_water_1": {
+        "name": "Eau chaude 1"
+      },
+      "p_hot_water_1": {
+        "name": "P Eau chaude 1"
+      },
+      "hot_water_2": {
+        "name": "Eau chaude 2"
+      },
+      "p_hot_water_2": {
+        "name": "P Eau chaude 2"
+      },
+      "room_temp_hc_0": {
+        "name": "Temp. ambiante CC 0"
+      },
+      "heating_circuit_0": {
+        "name": "Circuit de chauffage 0"
+      },
+      "room_temp_hc_1": {
+        "name": "Temp. ambiante CC 1"
+      },
+      "flow_actual_1": {
+        "name": "Départ réel 1"
+      },
+      "heating_circuit_1": {
+        "name": "Circuit de chauffage 1"
+      },
+      "room_temp_hc_2": {
+        "name": "Temp. ambiante CC 2"
+      },
+      "flow_actual_2": {
+        "name": "Départ réel 2"
+      },
+      "heating_circuit_2": {
+        "name": "Circuit de chauffage 2"
+      },
+      "room_temp_hc_3": {
+        "name": "Temp. ambiante CC 3"
+      },
+      "heating_circuit_3": {
+        "name": "Circuit de chauffage 3"
+      },
+      "room_temp_hc_4": {
+        "name": "Temp. ambiante CC 4"
+      },
+      "flow_actual_4": {
+        "name": "Départ réel 4"
+      },
+      "heating_circuit_4": {
+        "name": "Circuit de chauffage 4"
+      },
+      "room_temp_hc_5": {
+        "name": "Temp. ambiante CC 5"
+      },
+      "flow_actual_5": {
+        "name": "Départ réel 5"
+      },
+      "heating_circuit_5": {
+        "name": "Circuit de chauffage 5"
+      },
+      "room_temp_hc_6": {
+        "name": "Temp. ambiante CC 6"
+      },
+      "heating_circuit_6": {
+        "name": "Circuit de chauffage 6"
+      },
+      "room_temp_hc_7": {
+        "name": "Temp. ambiante CC 7"
+      },
+      "flow_actual_7": {
+        "name": "Départ réel 7"
+      },
+      "heating_circuit_7": {
+        "name": "Circuit de chauffage 7"
+      },
+      "room_temp_hc_8": {
+        "name": "Temp. ambiante CC 8"
+      },
+      "flow_actual_8": {
+        "name": "Départ réel 8"
+      },
+      "heating_circuit_8": {
+        "name": "Circuit de chauffage 8"
+      },
+      "boiler_release": {
+        "name": "Libération chaudière"
+      },
+      "program": {
+        "name": "Programme"
+      },
+      "program_hc0": {
+        "name": "Programme CC0"
+      },
+      "program_hc1": {
+        "name": "Programme CC1"
+      },
+      "program_hc2": {
+        "name": "Programme CC2"
+      },
+      "program_hc3": {
+        "name": "Programme CC3"
+      },
+      "program_hc4": {
+        "name": "Programme CC4"
+      },
+      "program_hc5": {
+        "name": "Programme CC5"
+      },
+      "program_hc6": {
+        "name": "Programme CC6"
+      },
+      "program_hc7": {
+        "name": "Programme CC7"
+      },
+      "program_hc8": {
+        "name": "Programme CC8"
+      },
+      "serial": {
+        "name": "Numéro de série"
+      },
+      "operating_hours": {
+        "name": "Heures de fonctionnement"
+      },
+      "service_time": {
+        "name": "Temps de service"
+      },
+      "empty_ash_in": {
+        "name": "Vider cendres dans"
+      },
+      "flow_actual_0": {
+        "name": "Départ réel 0"
+      },
+      "flow_actual_3": {
+        "name": "Départ réel 3"
+      },
+      "flow_actual_6": {
+        "name": "Départ réel 6"
+      },
+      "fuel_counter": {
+        "name": "Compteur combustible"
+      },
+      "buffer_charge": {
+        "name": "Charge tampon"
+      },
+      "buffer_top_0": {
+        "name": "Tampon haut 0"
+      },
+      "buffer_bottom_0": {
+        "name": "Tampon bas 0"
+      },
+      "buffer_top_1": {
+        "name": "Tampon haut 1"
+      },
+      "buffer_bottom_1": {
+        "name": "Tampon bas 1"
+      },
+      "buffer_top_2": {
+        "name": "Tampon haut 2"
+      },
+      "buffer_bottom_2": {
+        "name": "Tampon bas 2"
+      },
+      "p_additional_hw_0": {
+        "name": "P Eau chaude supp. 0"
+      },
+      "p_additional_hw_1": {
+        "name": "P Eau chaude supp. 1"
+      },
+      "p_additional_hw_2": {
+        "name": "P Eau chaude supp. 2"
+      },
+      "remote_pump_0": {
+        "name": "Pompe distante 0"
+      },
+      "remote_pump_1": {
+        "name": "Pompe distante 1"
+      },
+      "remote_pump_2": {
+        "name": "Pompe distante 2"
+      },
+      "buffer_t5": {
+        "name": "Tampon T5"
+      },
+      "buffer_t6": {
+        "name": "Tampon T6"
+      },
+      "buffer_t7": {
+        "name": "Tampon T7"
+      },
+      "additional_hw_0": {
+        "name": "Eau chaude supp. 0"
+      },
+      "additional_hw_1": {
+        "name": "Eau chaude supp. 1"
+      },
+      "additional_hw_2": {
+        "name": "Eau chaude supp. 2"
+      },
+      "operation": {
+        "name": "Fonctionnement"
+      },
+      "buffer_middle": {
+        "name": "Tampon milieu"
+      },
+      "boiler_charge_pump": {
+        "name": "Pompe de charge chaudière"
+      },
+      "hot_water_pump_0": {
+        "name": "Pompe eau chaude 0"
+      },
+      "hot_water_pump_1": {
+        "name": "Pompe eau chaude 1"
+      },
+      "hot_water_pump_2": {
+        "name": "Pompe eau chaude 2"
+      },
+      "heating_circuit_pump_0": {
+        "name": "Pompe circuit chauffage 0"
+      },
+      "room_temperature_hc_0": {
+        "name": "Température ambiante CC 0"
+      },
+      "room_temperature_hc_1": {
+        "name": "Température ambiante CC 1"
+      },
+      "heating_circuit_pump_1": {
+        "name": "Pompe circuit chauffage 1"
+      },
+      "room_temperature_hc_2": {
+        "name": "Température ambiante CC 2"
+      },
+      "heating_circuit_pump_2": {
+        "name": "Pompe circuit chauffage 2"
+      },
+      "heating_circuit_pump_3": {
+        "name": "Pompe circuit chauffage 3"
+      },
+      "room_temperature_hc_3": {
+        "name": "Température ambiante CC 3"
+      },
+      "room_temperature_hc_4": {
+        "name": "Température ambiante CC 4"
+      },
+      "heating_circuit_pump_4": {
+        "name": "Pompe circuit chauffage 4"
+      },
+      "room_temperature_hc_5": {
+        "name": "Température ambiante CC 5"
+      },
+      "heating_circuit_pump_5": {
+        "name": "Pompe circuit chauffage 5"
+      },
+      "heating_circuit_pump_6": {
+        "name": "Pompe circuit chauffage 6"
+      },
+      "room_temperature_hc_6": {
+        "name": "Température ambiante CC 6"
+      },
+      "room_temperature_hc_7": {
+        "name": "Température ambiante CC 7"
+      },
+      "heating_circuit_pump_7": {
+        "name": "Pompe circuit chauffage 7"
+      },
+      "room_temperature_hc_8": {
+        "name": "Température ambiante CC 8"
+      },
+      "heating_circuit_pump_8": {
+        "name": "Pompe circuit chauffage 8"
+      },
+      "mixer_remaining": {
+        "name": "Mélangeur restant"
+      },
+      "oil_boiler": {
+        "name": "Chaudière au fioul"
+      },
+      "serial_number": {
+        "name": "Numéro de série"
+      },
+      "additional_hot_water_0": {
+        "name": "Eau chaude supplémentaire 0"
+      },
+      "additional_hot_water_1": {
+        "name": "Eau chaude supplémentaire 1"
+      },
+      "additional_hot_water_2": {
+        "name": "Eau chaude supplémentaire 2"
+      },
+      "p_additional_hot_water_0": {
+        "name": "P Eau chaude supplémentaire 0"
+      },
+      "p_additional_hot_water_1": {
+        "name": "P Eau chaude supplémentaire 1"
+      },
+      "p_additional_hot_water_2": {
+        "name": "P Eau chaude supplémentaire 2"
+      },
+      "operation_wood": {
+        "name": "Fonctionnement bois"
+      },
+      "boiler_temperature_wood": {
+        "name": "Température chaudière bois"
+      },
+      "co2_wood": {
+        "name": "CO2 bois"
+      },
+      "operating_hours_wood": {
+        "name": "Heures fonctionnement bois"
+      },
+      "boiler_temperature_pellets": {
+        "name": "Température chaudière pellets"
+      },
+      "co2_pellets": {
+        "name": "CO2 pellets"
+      },
+      "operation_pellets": {
+        "name": "Fonctionnement pellets"
+      },
+      "operating_hours_pellets": {
+        "name": "Heures fonctionnement pellets"
+      }
+    }
+  }
+}

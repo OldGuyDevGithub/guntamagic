@@ -4,7 +4,10 @@ import json
 import os
 from datetime import timedelta
 
+import aiohttp
+
 from homeassistant.components.sensor import SensorEntity
+from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
@@ -36,7 +39,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
     mapping_file_name = entry.data.get(CONF_MAPPING)
 
     if not mapping_file_name:
-        _LOGGER.error("Kein Mapping-File ausgewählt — Abbruch.")
+        _LOGGER.error("Kein Mapping-File ausgewählt – Abbruch.")
         return
 
     mapping = await load_mapping(mapping_file_name)
@@ -45,13 +48,14 @@ async def async_setup_entry(hass, entry, async_add_entities):
         return
 
     coordinator = GuntamagicDataUpdateCoordinator(hass, entry)
-    await coordinator.async_config_entry_first_refresh()
+    await coordinator.async_refresh()
 
     sensors = [
         GuntamagicSensor(coordinator, sensor_id, details, entity_name, entry.entry_id)
         for sensor_id, details in mapping.items()
     ]
-    async_add_entities(sensors, update_before_add=True)
+
+    async_add_entities(sensors, update_before_add=False)
 
 
 class GuntamagicDataUpdateCoordinator(DataUpdateCoordinator):
@@ -73,9 +77,13 @@ class GuntamagicDataUpdateCoordinator(DataUpdateCoordinator):
         ip_address = self.entry.data[CONF_IP_ADDRESS]
         key = self.entry.data[CONF_KEY]
         mapping_file_name = self.entry.data.get(CONF_MAPPING)
+        timeout = aiohttp.ClientTimeout(total=10)
 
         try:
-            async with session.get(f"http://{ip_address}/ext/daqdata.cgi?key={key}") as response:
+            async with session.get(
+                f"http://{ip_address}/ext/daqdata.cgi?key={key}",
+                timeout=timeout,
+            ) as response:
                 if response.status != 200:
                     raise UpdateFailed(f"Fehlerhafte Antwort: {response.status}")
 
@@ -85,64 +93,83 @@ class GuntamagicDataUpdateCoordinator(DataUpdateCoordinator):
                 if not isinstance(data, list):
                     raise UpdateFailed("Unerwartetes Format: API sollte eine Liste zurückgeben")
 
+                if not data:
+                    raise UpdateFailed("Keine Daten vom Gerät erhalten")
+
                 mapping = await load_mapping(mapping_file_name)
+                if not mapping:
+                    raise UpdateFailed(f"Mapping konnte nicht geladen werden: {mapping_file_name}")
 
-                # Nur Werte übernehmen, deren Index im Bereich liegt
-                sensor_data = {
-                    sensor_id: data[details["index"]]
-                    for sensor_id, details in mapping.items()
-                    if details["index"] < len(data)
-                }
+                # FIX: Der Mapping-Schlüssel ("1", "3", ...) ist der Array-Index!
+                # Die Mapping-Dateien haben kein "index"-Feld – der Key selbst ist der Index.
+                sensor_data = {}
+                for sensor_id, details in mapping.items():
+                    try:
+                        idx = int(sensor_id)
+                        if idx < len(data):
+                            sensor_data[sensor_id] = data[idx]
+                        else:
+                            _LOGGER.debug(
+                                "Index %d außerhalb der Datenlänge %d – übersprungen",
+                                idx, len(data)
+                            )
+                    except (ValueError, TypeError):
+                        _LOGGER.warning("Ungültiger Mapping-Schlüssel: %s", sensor_id)
 
+                _LOGGER.debug("Sensor data extracted: %d values", len(sensor_data))
                 return sensor_data
 
+        except UpdateFailed:
+            raise
         except Exception as e:
-            raise UpdateFailed(f"Fehler beim Abrufen der Daten: {e}")
+            raise UpdateFailed(f"Fehler beim Abrufen der Daten: {e}") from e
 
 
 class GuntamagicSensor(SensorEntity):
     """Einzelner Guntamagic Sensor."""
 
+    # FIX: Notwendig damit HA den translation_key für den Namen verwendet
+    _attr_has_entity_name = True
+
     def __init__(self, coordinator, sensor_id, details, entity_name, entry_id):
         self.coordinator = coordinator
         self._sensor_id = sensor_id
-        self._name = details["name"]
-        self._unit = details.get("unit", None)
         self._entity_name = entity_name
         self._entry_id = entry_id
-        self._attr_native_unit_of_measurement = self._unit
-        self._attr_unique_id = f"{entry_id}_{sensor_id}"
-        self._attr_entity_id = f"sensor.{entity_name.lower()}_{self._name.replace(' ', '_').lower()}"
+
+        # translation_key verknüpft den Sensor mit dem Namen aus de.json/en.json
+        self._attr_translation_key = details.get("name_key")
+        self._attr_native_unit_of_measurement = details.get("unit") or None
+        self._attr_unique_id = f"{DOMAIN}_{entity_name}_{sensor_id}"
 
     async def async_added_to_hass(self):
         """Listener für automatische Updates registrieren."""
-        self.async_on_remove(self.coordinator.async_add_listener(self.async_write_ha_state))
+        self.async_on_remove(
+            self.coordinator.async_add_listener(self.async_write_ha_state)
+        )
 
     @property
-    def name(self):
-        return f"{self._entity_name} {self._name}"
-
-    @property
-    def state(self):
+    def native_value(self):
+        """Aktueller Sensorwert aus dem Coordinator."""
         if not self.coordinator.data:
             return None
-        return self.coordinator.data.get(self._sensor_id, "N/A")
-
-    @property
-    def unique_id(self):
-        return f"guntamagic_{self._entity_name}_{self._sensor_id}"
+        return self.coordinator.data.get(self._sensor_id)
 
     @property
     def should_poll(self):
         return False
 
     @property
-    def device_info(self):
-        """Geräteinformationen für das Device-Objekt in HA."""
-        return {
-            "identifiers": {(DOMAIN, self._entry_id)},
-            "name": self._entity_name,
-            "manufacturer": "Guntamagic",
-            "model": self.coordinator.entry.data.get(CONF_MAPPING, "Unbekannt"),
-            "sw_version": "1.0",
-        }
+    def available(self):
+        return self.coordinator.last_update_success
+
+    @property
+    def device_info(self) -> DeviceInfo:
+        """Geräteinformationen – gruppiert alle Sensoren unter einem Gerät."""
+        return DeviceInfo(
+            identifiers={(DOMAIN, self._entry_id)},
+            name=self._entity_name,
+            manufacturer="Guntamatic",
+            model=self.coordinator.entry.data.get(CONF_MAPPING, "Unbekannt"),
+            sw_version="1.0",
+        )
