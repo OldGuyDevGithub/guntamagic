@@ -100,21 +100,17 @@ class GuntamagicDataUpdateCoordinator(DataUpdateCoordinator):
                 if not mapping:
                     raise UpdateFailed(f"Mapping konnte nicht geladen werden: {mapping_file_name}")
 
-                # FIX: Der Mapping-Schlüssel ("1", "3", ...) ist der Array-Index!
-                # Die Mapping-Dateien haben kein "index"-Feld – der Key selbst ist der Index.
+                # Der "index" im Mapping ist die Position im API-Array
                 sensor_data = {}
                 for sensor_id, details in mapping.items():
-                    try:
-                        idx = int(sensor_id)
-                        if idx < len(data):
-                            sensor_data[sensor_id] = data[idx]
-                        else:
-                            _LOGGER.debug(
-                                "Index %d außerhalb der Datenlänge %d – übersprungen",
-                                idx, len(data)
-                            )
-                    except (ValueError, TypeError):
-                        _LOGGER.warning("Ungültiger Mapping-Schlüssel: %s", sensor_id)
+                    idx = details.get("index")
+                    if idx is not None and idx < len(data):
+                        sensor_data[sensor_id] = data[idx]
+                    elif idx is not None:
+                        _LOGGER.debug(
+                            "Index %d außerhalb der Datenlänge %d – übersprungen",
+                            idx, len(data)
+                        )
 
                 _LOGGER.debug("Sensor data extracted: %d values", len(sensor_data))
                 return sensor_data
@@ -128,7 +124,6 @@ class GuntamagicDataUpdateCoordinator(DataUpdateCoordinator):
 class GuntamagicSensor(SensorEntity):
     """Einzelner Guntamagic Sensor."""
 
-    # FIX: Notwendig damit HA den translation_key für den Namen verwendet
     _attr_has_entity_name = True
 
     def __init__(self, coordinator, sensor_id, details, entity_name, entry_id):
@@ -137,7 +132,6 @@ class GuntamagicSensor(SensorEntity):
         self._entity_name = entity_name
         self._entry_id = entry_id
 
-        # translation_key verknüpft den Sensor mit dem Namen aus de.json/en.json
         self._attr_translation_key = details.get("name_key")
         self._attr_native_unit_of_measurement = details.get("unit") or None
         self._attr_unique_id = f"{DOMAIN}_{entity_name}_{sensor_id}"
@@ -150,7 +144,6 @@ class GuntamagicSensor(SensorEntity):
 
     @property
     def native_value(self):
-        """Aktueller Sensorwert aus dem Coordinator."""
         if not self.coordinator.data:
             return None
         return self.coordinator.data.get(self._sensor_id)
@@ -165,7 +158,6 @@ class GuntamagicSensor(SensorEntity):
 
     @property
     def device_info(self) -> DeviceInfo:
-        """Geräteinformationen – gruppiert alle Sensoren unter einem Gerät."""
         return DeviceInfo(
             identifiers={(DOMAIN, self._entry_id)},
             name=self._entity_name,
