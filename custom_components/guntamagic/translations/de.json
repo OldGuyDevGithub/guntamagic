@@ -398,6 +398,39 @@
       },
       "operating_hours_pellets": {
         "name": "Betriebsstd. Pellets"
+      },
+      "operating_mode": {
+        "name": "Betriebsart"
+      },
+      "p_hot_water_3": {
+        "name": "P Warmwasser 3"
+      },
+      "p_hot_water_4": {
+        "name": "P Warmwasser 4"
+      },
+      "flow_actual_0b": {
+        "name": "Vorlauf Ist 0b"
+      },
+      "flow_actual_1b": {
+        "name": "Vorlauf Ist 1b"
+      },
+      "flow_actual_2b": {
+        "name": "Vorlauf Ist 2b"
+      },
+      "flow_actual_3b": {
+        "name": "Vorlauf Ist 3b"
+      },
+      "buffer_bottom_3": {
+        "name": "Puffer unten 3"
+      },
+      "p_additional_hw_3": {
+        "name": "P Zusatzwarmw. 3"
+      },
+      "p_additional_hw_4": {
+        "name": "P Zusatzwarmw. 4"
+      },
+      "remote_pump_3": {
+        "name": "Fernpumpe 3"
       }
     }
   }

@@ -398,6 +398,39 @@
       },
       "operating_hours_pellets": {
         "name": "Ore funzionamento pellet"
+      },
+      "operating_mode": {
+        "name": "Modalità operativa"
+      },
+      "p_hot_water_3": {
+        "name": "P Acqua calda 3"
+      },
+      "p_hot_water_4": {
+        "name": "P Acqua calda 4"
+      },
+      "flow_actual_0b": {
+        "name": "Mandata attuale 0b"
+      },
+      "flow_actual_1b": {
+        "name": "Mandata attuale 1b"
+      },
+      "flow_actual_2b": {
+        "name": "Mandata attuale 2b"
+      },
+      "flow_actual_3b": {
+        "name": "Mandata attuale 3b"
+      },
+      "buffer_bottom_3": {
+        "name": "Buffer inferiore 3"
+      },
+      "p_additional_hw_3": {
+        "name": "P Acqua calda aggiunt. 3"
+      },
+      "p_additional_hw_4": {
+        "name": "P Acqua calda aggiunt. 4"
+      },
+      "remote_pump_3": {
+        "name": "Pompa remota 3"
       }
     }
   }

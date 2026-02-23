@@ -398,6 +398,39 @@
       },
       "operating_hours_pellets": {
         "name": "Operating Hours Pellets"
+      },
+      "operating_mode": {
+        "name": "Operating Mode"
+      },
+      "p_hot_water_3": {
+        "name": "P Hot Water 3"
+      },
+      "p_hot_water_4": {
+        "name": "P Hot Water 4"
+      },
+      "flow_actual_0b": {
+        "name": "Flow Actual 0b"
+      },
+      "flow_actual_1b": {
+        "name": "Flow Actual 1b"
+      },
+      "flow_actual_2b": {
+        "name": "Flow Actual 2b"
+      },
+      "flow_actual_3b": {
+        "name": "Flow Actual 3b"
+      },
+      "buffer_bottom_3": {
+        "name": "Buffer Bottom 3"
+      },
+      "p_additional_hw_3": {
+        "name": "P Additional HW 3"
+      },
+      "p_additional_hw_4": {
+        "name": "P Additional HW 4"
+      },
+      "remote_pump_3": {
+        "name": "Remote Pump 3"
       }
     }
   }

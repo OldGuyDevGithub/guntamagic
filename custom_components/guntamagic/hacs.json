@@ -4,9 +4,7 @@
     "domains": ["guntamagic"],
     "country": "DE",
     "homeassistant": "2021.5.0",
-    "local_location": "/custom_components/guntamagic/",
     "filename": "manifest.json",
-    "source_url": "https://github.com/deinrepo",
-    "image": "logo.png",
-    "zip_release": false 
+    "zip_release": true,
+    "source_url": "https://github.com/OldGuyDevGithub/guntamagic"
 }
