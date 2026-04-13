@@ -35,6 +35,8 @@ def load_mapping_sync(mapping_file):
 
 async def async_setup_entry(hass, entry, async_add_entities):
     """Set up the Guntamagic sensors."""
+    from .const import DOMAIN
+
     entity_name = entry.data.get(CONF_NAME, "Guntamagic")
     mapping_file_name = entry.data.get(CONF_MAPPING)
 
@@ -47,8 +49,7 @@ async def async_setup_entry(hass, entry, async_add_entities):
         _LOGGER.error("Mapping konnte nicht geladen werden: %s", mapping_file_name)
         return
 
-    coordinator = GuntamagicDataUpdateCoordinator(hass, entry)
-    await coordinator.async_refresh()
+    coordinator = hass.data[DOMAIN][entry.entry_id]
 
     sensors = [
         GuntamagicSensor(coordinator, sensor_id, details, entity_name, entry.entry_id)

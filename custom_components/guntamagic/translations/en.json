@@ -42,11 +42,34 @@
         "biostar": "Biostar",
         "bmk": "BMK",
         "bmk_hybrid": "BMK Hybrid",
-        "bmk_vario": "BMK Vario (Wood/Pellets)"
+        "bmk_vario": "BMK Vario (Wood/Pellets)",
+        "powerchip": "Powerchip"
       }
     }
   },
   "entity": {
+    "select": {
+      "program_select": {
+        "name": "Controller Program",
+        "state": {
+          "off":       "Off",
+          "normal":    "Normal",
+          "hot_water": "Hot Water",
+          "heating":   "Heating",
+          "setback":   "Setback",
+          "manual":    "Manual"
+        }
+      },
+      "program_hc_select": {
+        "name": "HC Program",
+        "state": {
+          "off":     "Off",
+          "normal":  "Normal",
+          "heating": "Heating",
+          "setback": "Setback"
+        }
+      }
+    },
     "sensor": {
       "outside_temperature": {
         "name": "Outside Temperature"

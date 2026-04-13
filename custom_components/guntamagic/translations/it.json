@@ -42,11 +42,34 @@
         "biostar": "Biostar",
         "bmk": "BMK",
         "bmk_hybrid": "BMK Hybrid",
-        "bmk_vario": "BMK Vario (Legna/Pellet)"
+        "bmk_vario": "BMK Vario (Legna/Pellet)",
+        "powerchip": "Powerchip"
       }
     }
   },
   "entity": {
+    "select": {
+      "program_select": {
+        "name": "Programma regolatore",
+        "state": {
+          "off":       "Spento",
+          "normal":    "Normale",
+          "hot_water": "Acqua calda",
+          "heating":   "Riscaldamento",
+          "setback":   "Ridotto",
+          "manual":    "Manuale"
+        }
+      },
+      "program_hc_select": {
+        "name": "Programma CC",
+        "state": {
+          "off":     "Spento",
+          "normal":  "Normale",
+          "heating": "Riscaldamento",
+          "setback": "Ridotto"
+        }
+      }
+    },
     "sensor": {
       "outside_temperature": {
         "name": "Temperatura esterna"
